@@ -14,7 +14,11 @@ def selectionSort(arr):
 
 # Main function
 if __name__ == '__main__':
-    arr = list(map(int, input("Enter the elements separated by space: ").split()))
+    user_input = input("Enter the elements separated by space: ")
+    parts = user_input.split()
+    arr = []
+    for part in parts:
+        arr.append(int(part))
     print("Original array:", arr)
     sorted_arr = selectionSort(arr)
     print("Sorted array:", sorted_arr)

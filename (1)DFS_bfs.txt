@@ -1,54 +1,65 @@
-def dfs(visited,graph,node):
-    if node not in visited:
-        print(node,end = " ")
-        visited.add(node)
-        for neighbour in graph[node]:
-            dfs(visited, graph, neighbour)
+graph = {
+    'A': ['B', 'E', 'C'],
+    'B': ['A', 'D', 'E'],
+    'D': ['B', 'E'],
+    'E': ['A', 'D', 'B'],
+    'C': ['A', 'F', 'G'],
+    'F': ['C'],
+    'G': ['C']
+}
 
-def bfs(visited,graph,node,queue):
-    visited.add(node)
-    queue.append(node)
+def bfs(graph, start_node, goal_node):
+    visited = []
+    queue = []
 
+    visited.append(start_node)
+    queue.append(start_node)
+
+    print("The BFS Traversal is :")
     while queue:
-        s = queue.pop(0)
-        print(s,end = " ")
-        for neighbour in graph[s]:
-            if neighbour not in visited:
-                visited.add(neighbour)
-                queue.append(neighbour)
+        m = queue.pop(0)
+        print(m)
+        if m == goal_node:
+            print("Node is Found !!!")
+            break
+        for n in graph[m]:
+            if n not in visited:
+                visited.append(n)
+                queue.append(n)
+
+def dfs(graph, start_node, goal_node):
+    visited = []
+    stack = []
+
+    stack.append(start_node)
+    visited.append(start_node)
+
+    print("The DFS Traversal is :")
+    while stack:
+        node = stack.pop()
+        print(node)
+        if node == goal_node:
+            print("Goal node found!")
+            break
+        for n in graph[node]:
+            if n not in visited:
+                visited.append(n)
+                stack.append(n)
 
 def main():
-    visited1 = set() # TO keep track of DFS visited nodes
-    visited2 = set() # TO keep track of BFS visited nodes
-    queue = []       # For BFS
-    n = int(input("Enter number of nodes : "))
-    graph = dict()
+    print("Choose the Traversal method:")
+    print("1. BFS")
+    print("2. DFS")
+    choice = input("Enter your choice (1 or 2): ")
 
-    for i in range(1,n+1):
-        edges = int(input("Enter number of edges for node {} : ".format(i)))
-        graph[i] = list()
-        for j in range(1,edges+1):
-            node = int(input("Enter edge {} for node {} : ".format(j,i)))
-            graph[i].append(node)
+    start = input("Enter Start Node: ").upper()
+    goal = input("Enter Goal Node: ").upper()
 
-    print("The following is DFS")
-    dfs(visited1, graph, 1)
-    print()
-    print("The following is BFS")
-    bfs(visited2, graph, 1, queue)
+    if choice == '1':
+        bfs(graph, start, goal)
+    elif choice == '2':
+        dfs(graph, start, goal)
+    else:
+        print("Invalid Choice")
 
-if __name__=="__main__":
-    main()
-
-
-    # graph = {
-    #     '1' : ['2','3'],
-    #     '2' : ['4', '5'],
-    #     '3' : ['6','7'],
-    #     '4' : [],
-    #     '5' : [],
-    #     '6' : [],
-    #     '7' : []
-    #     DFS : 1 2 4 5 3 6 7 
-    #     BFS : 1 2 3 4 5 6 7 
-    # }
+main()
